@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> About Us - Smart Farming App </title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8fafc;
+            color: #334155;
+        }
+        
+        .hero-section {
+            background: linear-gradient(rgba(15, 118, 110, 0.9), rgba(15, 118, 110, 0.8)),
+                        url('/images/farm-background.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .content-card {
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .content-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .section-icon {
+            background: #10b981;
+            padding: 1rem;
+            border-radius: 50%;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(45deg, #10b981, #059669);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body>
+   
+
+    <div class="hero-section text-white py-20">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-5xl font-bold mb-6">About Us</h1>
+            <p class="text-xl max-w-2xl mx-auto">
+                Pioneering the future of agriculture through innovative AI solutions
+            </p>
+        </div>
+    </div>
+
+    <main class="container mx-auto px-4 py-16">
+        <div class="grid md:grid-cols-3 gap-8">
+            <!-- Mission Section -->
+            <div class="content-card p-8">
+                <div class="section-icon">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                              d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                </div>
+                <h2 class="text-2xl font-bold mb-4 gradient-text">Our Mission</h2>
+                <p class="text-gray-600 leading-relaxed">
+                    We aim to revolutionize agriculture through the power of artificial intelligence, 
+                    providing farmers with the tools they need to optimize their operations and 
+                    increase productivity while promoting sustainable practices.
+                </p>
+            </div>
+
+            <!-- Vision Section -->
+            <div class="content-card p-8">
+                <div class="section-icon">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                              d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                    </svg>
+                </div>
+                <h2 class="text-2xl font-bold mb-4 gradient-text">Our Vision</h2>
+                <p class="text-gray-600 leading-relaxed">
+                    To create a sustainable future for agriculture by integrating advanced technology 
+                    and data-driven solutions that empower farmers worldwide, ensuring food security 
+                    for generations to come.
+                </p>
+            </div>
+
+            <!-- Team Section -->
+            <div class="content-card p-8">
+                <div class="section-icon">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                              d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
+                </div>
+                <h2 class="text-2xl font-bold mb-4 gradient-text">Our Team</h2>
+                <p class="text-gray-600 leading-relaxed">
+                    Our diverse team consists of experts in agriculture, technology, and data science, 
+                    all united by a common goal: to make a lasting positive impact in the farming 
+                    community through innovation and collaboration.
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-900 text-white py-8 mt-16">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2023 Smart Farming App. All rights reserved.</p>
+        </div>
+    </footer>
+
+    
+</body>
+</html>

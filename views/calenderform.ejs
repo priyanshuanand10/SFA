@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crop Calendar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      /* Custom styling for calendar symbol */
+      .calendar-icon {
+        font-size: 1.8rem;
+        margin-left: 0.5rem;
+        vertical-align: middle;
+      }
+      .custom-bg {
+        background-color: #f0f9f0;
+      }
+    </style>
+  </head>
+  <body class="custom-bg">
+    <%- include('partials/header') %>
+
+    <div class="min-h-screen flex flex-col items-center justify-center py-12">
+      <!-- Header -->
+      <h1 class="text-4xl font-bold mb-10 text-green-700">
+        Generate Your Crop Calendar <span class="calendar-icon">📅</span>
+      </h1>
+
+      <!-- Form -->
+      <form
+        action="/api/generate-calendar"
+        method="POST"
+        class="bg-white p-10 rounded-xl shadow-lg w-full max-w-3xl"
+      >
+        <!-- State -->
+        <div class="mb-6">
+          <label
+            for="state"
+            class="block text-lg font-medium text-gray-700 mb-2"
+            >State</label
+          >
+          <select
+            name="state"
+            id="state"
+            required
+            class="mt-1 block w-full p-3 text-lg border border-gray-300 rounded-lg shadow-sm focus:ring-green-500 focus:border-green-500"
+          >
+            <option value="" disabled selected>Select your state</option>
+            <option value="Karnataka">Karnataka</option>
+            <option value="Maharashtra">Maharashtra</option>
+            <option value="Punjab">Punjab</option>
+          </select>
+        </div>
+
+        <!-- Region -->
+        <div class="mb-6">
+          <label
+            for="region"
+            class="block text-lg font-medium text-gray-700 mb-2"
+            >Region</label
+          >
+          <select
+            name="region"
+            id="region"
+            required
+            class="mt-1 block w-full p-3 text-lg border border-gray-300 rounded-lg shadow-sm focus:ring-green-500 focus:border-green-500"
+            onchange="updateCrops()"
+          >
+            <option value="" disabled selected>Select your region</option>
+            <option value="Coastal Karnataka">Coastal Karnataka</option>
+            <option value="South Karnataka">South Karnataka</option>
+            <option value="North Karnataka">North Karnataka</option>
+            <option value="Central Karnataka">Central Karnataka</option>
+          </select>
+        </div>
+
+        <!-- Crop List -->
+        <div class="mb-8">
+          <label for="crop" class="block text-lg font-medium text-gray-700 mb-2"
+            >Crop</label
+          >
+          <select
+            name="crop"
+            id="crop"
+            required
+            class="mt-1 block w-full p-3 text-lg border border-gray-300 rounded-lg shadow-sm focus:ring-green-500 focus:border-green-500"
+          >
+            <option value="" disabled selected>Select your crop</option>
+          </select>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="flex justify-center">
+          <button
+            type="submit"
+            class="w-full bg-green-600 text-white text-lg font-bold py-4 px-6 rounded-lg hover:bg-green-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+          >
+            Generate Calendar
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <script>
+      const cropData = {
+        "Coastal Karnataka": [
+          "Paddy (Rice)",
+          "Coconut",
+          "Arecanut (Betel Nut)",
+        ],
+        "South Karnataka": [
+          "Ragi (Finger Millet)",
+          "Groundnut",
+          "Paddy (Rice)", // Added new entry for South Karnataka
+        ],
+        "North Karnataka": [
+          "Jowar (Sorghum)",
+          "Bengal Gram (Chickpea)",
+          "Cotton", // Added new entry for North Karnataka
+        ],
+        "Central Karnataka": [
+          "Tomato",
+          "Pearl Millet (Bajra)",
+          "Chili (Capsicum)",
+        ],
+      };
+
+      // Update crop options based on the selected region
+      function updateCrops() {
+        const region = document.getElementById("region").value;
+        const cropSelect = document.getElementById("crop");
+
+        // Clear existing options
+        cropSelect.innerHTML =
+          '<option value="" disabled selected>Select your crop</option>';
+
+        if (region && cropData[region]) {
+          cropData[region].forEach((crop) => {
+            const option = document.createElement("option");
+            option.value = crop;
+            option.textContent = crop;
+            cropSelect.appendChild(option);
+          });
+        }
+      }
+    </script>
+  </body>
+</html>

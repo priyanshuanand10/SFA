@@ -1,0 +1,218 @@
+<!-- views/sugarcane-calendar.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= crop %> Growing Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        background-color: #f0fdf4;
+      }
+      .stage-card {
+        transition: transform 0.2s;
+      }
+      .stage-card:hover {
+        transform: translateY(-5px);
+      }
+    </style>
+  </head>
+  <body>
+    <%- include('partials/header') %>
+
+    <!-- Main Content -->
+    <div class="pt-20">
+      <!-- Hero Section -->
+      <div class="bg-gradient-to-b from-green-100 to-white py-12">
+        <div class="max-w-7xl mx-auto px-4">
+          <div class="text-center mb-8">
+            <span
+              class="bg-green-100 text-green-800 text-sm font-medium px-4 py-1 rounded-full"
+            >
+              <%= region %> Region
+            </span>
+            <h1 class="mt-4 text-4xl font-bold text-gray-900">
+              <%= crop %> Growing Guide
+            </h1>
+          </div>
+
+          <!-- Progress Bar -->
+          <div class="max-w-3xl mx-auto bg-white rounded-lg shadow-sm p-6">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-sm font-medium text-gray-700"
+                >Growing Progress</span
+              >
+              <span class="text-sm font-medium text-green-600">
+                <%= Math.min(Math.round(((new Date() - new
+                Date(sowingDates.primary)) / (365 * 24 * 60 * 60 * 1000)) *
+                100), 100) %>%
+              </span>
+            </div>
+            <div class="h-2 bg-gray-200 rounded-full">
+              <div
+                class="h-2 bg-green-500 rounded-full transition-all duration-500"
+                style="
+                  width: <%=
+                    Math.min(
+                      (
+                          (new Date() - new Date(sowingDates.primary)) /
+                            (365 * 24 * 60 * 60 * 1000)
+                        ) * 100,
+                      100
+                    )
+                    %>%;
+                "
+              ></div>
+            </div>
+            <div class="flex justify-between mt-2">
+              <span class="text-xs text-gray-500"
+                >Sowing: <%= sowingDates.primary %></span
+              >
+              <span class="text-xs text-gray-500">Expected Harvest</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Growing Stages -->
+      <div class="max-w-7xl mx-auto px-4 py-12">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <% lifecycleStages.forEach((stage, index) => { %>
+          <div class="stage-card bg-white rounded-xl shadow-md overflow-hidden">
+            <div class="p-6">
+              <div class="flex items-center mb-4">
+                <div
+                  class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center"
+                >
+                  <span class="text-green-600 font-semibold"
+                    ><%= index + 1 %></span
+                  >
+                </div>
+                <div class="ml-4">
+                  <h3 class="font-semibold text-gray-900">
+                    <%= stage.title %>
+                  </h3>
+                  <p class="text-sm text-gray-500"><%= stage.duration %></p>
+                </div>
+              </div>
+              <ul class="space-y-3">
+                <% stage.recommendations.forEach(rec => { %>
+                <li class="flex items-start text-sm">
+                  <svg
+                    class="w-5 h-5 text-green-500 mr-2 flex-shrink-0"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                  <span class="text-gray-600"><%= rec %></span>
+                </li>
+                <% }) %>
+              </ul>
+            </div>
+          </div>
+          <% }) %>
+        </div>
+
+        <!-- Disease Prevention -->
+        <div class="mt-12">
+          <h2 class="text-2xl font-bold text-gray-900 mb-6">
+            Disease Prevention
+          </h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <% diseases.forEach(disease => { %>
+            <div class="bg-white rounded-xl shadow-md overflow-hidden">
+              <div class="p-6">
+                <div class="flex items-center mb-4">
+                  <div class="p-2 bg-red-100 rounded-lg">
+                    <svg
+                      class="w-6 h-6 text-red-600"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                      />
+                    </svg>
+                  </div>
+                  <h3 class="ml-3 text-lg font-semibold text-gray-900">
+                    <%= disease.name %>
+                  </h3>
+                </div>
+                <p class="text-gray-600 mb-4"><%= disease.description %></p>
+                <ul class="space-y-2">
+                  <% disease.prevention.forEach(prev => { %>
+                  <li class="flex items-start text-sm">
+                    <svg
+                      class="w-5 h-5 text-red-500 mr-2 flex-shrink-0"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M9 12l2 2 4-4"
+                      />
+                    </svg>
+                    <span class="text-gray-600"><%= prev %></span>
+                  </li>
+                  <% }) %>
+                </ul>
+              </div>
+            </div>
+            <% }) %>
+          </div>
+        </div>
+
+        <!-- Key Reminders -->
+        <div class="mt-12 bg-white rounded-xl shadow-md overflow-hidden">
+          <div class="bg-gradient-to-r from-yellow-500 to-yellow-600 px-6 py-4">
+            <h2 class="text-xl font-semibold text-white">
+              Important Reminders
+            </h2>
+          </div>
+          <div class="p-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <% additionalRecommendations.forEach(rec => { %>
+              <div class="flex items-start bg-yellow-50 p-4 rounded-lg">
+                <svg
+                  class="w-5 h-5 text-yellow-600 mr-3 flex-shrink-0"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+                <span class="text-gray-700"><%= rec %></span>
+              </div>
+              <% }) %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
