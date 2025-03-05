@@ -1,25 +1,39 @@
+/**
+ * Required External Modules
+ * multer: Middleware for handling multipart/form-data (file uploads)
+ * path: Node.js path module for handling file paths
+ * fs: Node.js file system module for directory operations
+ */
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
 
-// Create uploads directory if it doesn't exist
+/**
+ * Initialize upload directory
+ * Creates 'uploads' directory if it doesn't exist
+ */
 const uploadDir = "uploads";
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir);
 }
 
-// Multer configuration
+/**
+ * Multer Storage Configuration
+ * Handles file destination and filename generation
+ * Includes file type validation for images
+ */
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "uploads/");
   },
-  //(this is also validata the file by the property called the extname which validate the extension of the file)
   filename: (req, file, cb) => {
-    // Add file type validation
+    // Define allowed file extensions
     const allowedTypes = /jpeg|jpg|png/;
+    // Validate file extension
     const extname = allowedTypes.test(
       path.extname(file.originalname).toLowerCase()
     );
+    // Validate file mimetype
     const mimetype = allowedTypes.test(file.mimetype);
 
     if (extname && mimetype) {
@@ -30,9 +44,11 @@ const storage = multer.diskStorage({
   },
 });
 
-// File filter(this is done by mimetype validation=> a file is like myphoto.jpg=> filename.mimetype = image/jpeg)
+/**
+ * File Filter Configuration
+
+ */
 const fileFilter = (req, file, cb) => {
-  // Accept only image files
   if (file.mimetype.startsWith("image/")) {
     cb(null, true);
   } else {
@@ -40,9 +56,11 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
-//both the validataion does the same thing but is recommended  to make the validation more robust :)
-
-// Multer upload configuration( this is the final configuration of the multer):)
+/**
+ * Multer Configuration Object
+ * Combines storage, file filter, and file size limits
+ * Maximum file size: 5MB
+ */
 const upload = multer({
   storage: storage,
   fileFilter: fileFilter,
@@ -52,4 +70,3 @@ const upload = multer({
 });
 
 module.exports = upload;
-
