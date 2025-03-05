@@ -1,34 +1,46 @@
+/**
+ * Required External Modules
+ * jwt: JSON Web Token implementation for token verification
+ */
 const jwt = require("jsonwebtoken");
+
+/**
+ * Required Internal Modules
+ * User: MongoDB model for user verification
+ * BlacklistedToken: MongoDB model for token invalidation checking
+ */
 const User = require("../models/User");
 const BlacklistedToken = require("../models/blacklist");
 
+/**
+ * Authentication Middleware
+ * Verifies JWT tokens and handles user authentication
+ * Checks for token blacklisting and expiration
+ * Validates user existence in database
+ *
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @param {Function} next - Express next middleware function
+ * @returns {void}
+ */
 const authenticateToken = async (req, res, next) => {
   try {
+    // Extract token from cookies or Authorization header
     const token =
       req.cookies.token || req.header("Authorization")?.replace("Bearer ", "");
 
     if (!token) {
-      // return res.status(401).json({
-      //   message: "Please sign in to continue. Use Google sign-in or another method.",
-      //   redirectUrl: "/",
-
-      //  });
       return res.redirect("/");
     }
-    //console.log("token : ", token);
 
-    // Check if token is blacklisted
+    // Check token blacklist status
     const isBlacklisted = await BlacklistedToken.findOne({ token });
     if (isBlacklisted) {
       res.clearCookie("token");
-      // return res.status(401).json({
-      //   message: "Please sign in to continue. Use Google sign-in or another method.",
-      //   redirectUrl: "/",
-      // });
       return res.redirect("/");
     }
 
-    // Verify and decode token
+    // Token verification and user validation
     const JWT_SECRET = process.env.JWT_SECRET;
     try {
       const decoded = jwt.verify(token, JWT_SECRET);
@@ -37,9 +49,6 @@ const authenticateToken = async (req, res, next) => {
       const currentTimestamp = Math.floor(Date.now() / 1000);
       if (decoded.exp < currentTimestamp) {
         res.clearCookie("token");
-        // return res.status(401).json({
-        //   message : "Token "
-        // })
         return res.redirect("/");
       }
 
@@ -50,10 +59,6 @@ const authenticateToken = async (req, res, next) => {
       const userExists = await User.findById(decoded.id);
       if (!userExists) {
         res.clearCookie("token");
-        // return res.status(401).json({
-        //   message : "User not found. Please sign in again.",
-        //   redirectUrl : "/",
-        // });
         return res.redirect("/");
       }
 
@@ -62,21 +67,11 @@ const authenticateToken = async (req, res, next) => {
       // Handle invalid or expired tokens
       console.error("JWT Verification failed:", jwtError);
       res.clearCookie("token");
-      // return res.status(500).json({
-      //   message : "Token verification failed. Please sign in again.",
-      //   redirectUrl : "/",
-      // });
-
       return res.redirect("/");
     }
   } catch (error) {
     console.error("Auth Middleware Error:", error);
     res.clearCookie("token");
-    // return res.status(500).json({
-    //   message : "Internal server error. Please try again later.",
-    //   redirectUrl : "/",
-    // });
-
     return res.redirect("/");
   }
 };

@@ -1,10 +1,29 @@
+/**
+ * Required External Modules
+ * axios: Promise based HTTP client for making requests
+ * fs: Node.js file system module for file operations
+ * FormData: Module for creating form data objects for file uploads
+ */
 const axios = require("axios");
 const fs = require("fs");
 const FormData = require("form-data");
+
+/**
+ * Required Internal Modules
+ * User: MongoDB model for user data
+ * Diseases: MongoDB model for plant diseases information
+ * CropCalendar: MongoDB model for crop calendar data
+ */
 const User = require("../models/User");
 const Diseases = require("../models/Diseases");
 const CropCalendar = require("../models/Crop_calender");
 
+/**
+ * Weather API Controller
+ * Fetches current weather data from WeatherAPI
+ * @param {Object} req - Express request object with location query
+ * @param {Object} res - Express response object
+ */
 exports.getWeather = async (req, res) => {
   try {
     const location = req.query.location;
@@ -21,6 +40,12 @@ exports.getWeather = async (req, res) => {
   }
 };
 
+/**
+ * Crop Calendar Generator
+ * Generates planting calendar based on region and crop
+ * @param {Object} req - Express request object with region and crop data
+ * @param {Object} res - Express response object
+ */
 exports.generateCalendar = async (req, res) => {
   try {
     const { region, crop } = req.body;
@@ -35,8 +60,14 @@ exports.generateCalendar = async (req, res) => {
     console.error("Error:", error);
     res.status(500).json({ message: "Server error" });
   }
-};  
+};
 
+/**
+ * Pest Detection API
+ * Processes uploaded image for pest detection using CNN model
+ * @param {Object} req - Express request object with file upload
+ * @param {Object} res - Express response object
+ */
 exports.pestDetection = async (req, res) => {
   if (!req.file) return res.status(400).json({ message: "No file uploaded" });
 
@@ -44,19 +75,15 @@ exports.pestDetection = async (req, res) => {
     const formData = new FormData();
     formData.append("file", fs.createReadStream(req.file.path));
     console.log("computer networks padh raha hu");
-    const apiResponse = await axios.post(
-      process.env.CNN_Model_API,
-      formData,
-      {
-        headers: formData.getHeaders(),
-      }
-    );
+    const apiResponse = await axios.post(process.env.CNN_Model_API, formData, {
+      headers: formData.getHeaders(),
+    });
 
     //console.log(apiResponse.data.prediction);
-    
+
     const diseaseType = apiResponse.data.prediction;
     //console.log("Disease Type:", diseaseType);
-    
+
     fs.unlink(req.file.path, (err) => {
       if (err) console.error("Failed to delete file:", err);
     });
@@ -73,6 +100,12 @@ exports.pestDetection = async (req, res) => {
   }
 };
 
+/**
+ * Pest Result Renderer
+ * Fetches and displays detailed information about detected disease
+ * @param {Object} req - Express request object with disease query
+ * @param {Object} res - Express response object
+ */
 exports.getPestResult = async (req, res) => {
   try {
     const diseaseType = req.query.disease;
@@ -91,6 +124,12 @@ exports.getPestResult = async (req, res) => {
   }
 };
 
+/**
+ * Crop Price Fetcher
+ * Retrieves crop prices from government API based on location and commodity
+ * @param {Object} req - Express request object with search parameters
+ * @param {Object} res - Express response object
+ */
 exports.getCropPrices = async (req, res) => {
   try {
     const { state, district, commodity, arrivalDate } = req.query;
@@ -103,16 +142,16 @@ exports.getCropPrices = async (req, res) => {
 
     const apiKey = process.env.CROP_PRICE_API;
     const url =
-          `https://api.data.gov.in/resource/35985678-0d79-46b4-9ed6-6f13308a1d24?` +
-        `api-key=${apiKey}&format=json&offset=0&limit=5&` +
-        `filters%5BState.keyword%5D=${encodeURIComponent(state)}&` +
-        `filters%5BDistrict.keyword%5D=${encodeURIComponent(district)}&` +
-        `filters%5BCommodity.keyword%5D=${encodeURIComponent(commodity)}&` +
-        `filters%5BArrival_Date%5D=${encodeURIComponent(arrivalDate)}`;
+      `https://api.data.gov.in/resource/35985678-0d79-46b4-9ed6-6f13308a1d24?` +
+      `api-key=${apiKey}&format=json&offset=0&limit=5&` +
+      `filters%5BState.keyword%5D=${encodeURIComponent(state)}&` +
+      `filters%5BDistrict.keyword%5D=${encodeURIComponent(district)}&` +
+      `filters%5BCommodity.keyword%5D=${encodeURIComponent(commodity)}&` +
+      `filters%5BArrival_Date%5D=${encodeURIComponent(arrivalDate)}`;
 
     const response = await axios.get(url);
     const data = response.data;
-  
+
     res.render("Crop_prices", { records: data.records || [] });
   } catch (error) {
     console.error("Error:", error);
@@ -124,6 +163,12 @@ exports.getCropPrices = async (req, res) => {
   }
 };
 
+/**
+ * User Information Controller
+ * Retrieves authenticated user's information
+ * @param {Object} req - Express request object with user ID
+ * @param {Object} res - Express response object
+ */
 exports.getUserInfo = async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
@@ -140,6 +185,12 @@ exports.getUserInfo = async (req, res) => {
   }
 };
 
+/**
+ * Dashboard Controller
+ * Renders user dashboard with personalized information
+ * @param {Object} req - Express request object with user authentication
+ * @param {Object} res - Express response object
+ */
 exports.getDashboard = async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
