@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Smart Farming Assistant</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <style>
+        @keyframes float {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(100vw + 150px)); }
+        }
+        
+        @keyframes hover {
+            0%, 100% { transform: translate(-50%, -50%); }
+            50% { transform: translate(-50%, -60%); }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+        }
+        
+        .cloud {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.8;
+        }
+        
+        .cloud:nth-child(1) {
+            width: 120px;
+            height: 30px;
+            top: 15%;
+            left: 10%;
+            animation: float 30s linear infinite;
+        }
+        
+        .cloud:nth-child(2) {
+            width: 90px;
+            height: 25px;
+            top: 25%;
+            left: 70%;
+            animation: float 25s linear infinite;
+        }
+        
+        .cloud:nth-child(3) {
+            width: 150px;
+            height: 35px;
+            top: 10%;
+            left: 40%;
+            animation: float 35s linear infinite;
+        }
+        
+        .drone {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: hover 4s ease-in-out infinite;
+        }
+        
+        .question-mark {
+            position: absolute;
+            top: 30%;
+            right: 20%;
+            font-size: 40px;
+            color: #0288D1;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        .field {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 60px;
+            background: linear-gradient(to right, #81C784, #2E7D32);
+            border-radius: 50%;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-green-50 min-h-screen flex flex-col items-center justify-center overflow-x-hidden relative">
+    <div class="absolute top-0 left-0 w-full h-full overflow-hidden -z-10">
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+    </div>
+    
+    <div class="max-w-4xl mx-auto px-4 py-10 text-center">
+        <div class="text-6xl md:text-8xl font-bold text-green-700 mb-2 relative shadow-sm">404</div>
+        <h1 class="text-xl md:text-3xl text-gray-800 mb-6">Oops! Looks like this crop got lost in the fields!</h1>
+        <p class="text-base md:text-lg text-gray-600 mb-10 max-w-2xl mx-auto">The page you're looking for seems to have wandered off our digital farm. Our smart drones are searching, but meanwhile, let's get you back on track.</p>
+        
+        <div class="relative w-60 h-60 md:w-72 md:h-72 mx-auto my-8">
+            <svg class="drone" width="150" height="100" viewBox="0 0 150 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Main body -->
+                <rect x="50" y="35" width="50" height="30" rx="5" fill="#555" />
+                
+                <!-- Propeller arms -->
+                <rect x="20" y="45" width="30" height="10" fill="#777" />
+                <rect x="100" y="45" width="30" height="10" fill="#777" />
+                <rect x="65" y="15" width="10" height="30" fill="#777" />
+                <rect x="65" y="65" width="10" height="30" fill="#777" />
+                
+                <!-- Propellers -->
+                <circle cx="20" cy="50" r="15" fill="#0288D1" opacity="0.7">
+                    <animate attributeName="opacity" values="0.7;0.3;0.7" dur="1s" repeatCount="indefinite" />
+                </circle>
+                <circle cx="130" cy="50" r="15" fill="#0288D1" opacity="0.7">
+                    <animate attributeName="opacity" values="0.7;0.3;0.7" dur="1s" repeatCount="indefinite" />
+                </circle>
+                <circle cx="70" cy="15" r="15" fill="#0288D1" opacity="0.7">
+                    <animate attributeName="opacity" values="0.3;0.7;0.3" dur="1s" repeatCount="indefinite" />
+                </circle>
+                <circle cx="70" cy="85" r="15" fill="#0288D1" opacity="0.7">
+                    <animate attributeName="opacity" values="0.3;0.7;0.3" dur="1s" repeatCount="indefinite" />
+                </circle>
+                
+                <!-- Camera -->
+                <circle cx="75" cy="50" r="10" fill="#333" />
+                <circle cx="75" cy="50" r="5" fill="#0288D1" />
+                
+                <!-- Status light -->
+                <circle cx="85" cy="40" r="3" fill="#F44336">
+                    <animate attributeName="fill" values="#F44336;#D32F2F;#F44336" dur="2s" repeatCount="indefinite" />
+                </circle>
+            </svg>
+            
+            <div class="field"></div>
+            <div class="question-mark">?</div>
+        </div>
+        
+        <div class="mt-8">
+            <a href="/" class="inline-block px-8 py-4 bg-green-600 text-white rounded-md font-medium transition duration-300 transform hover:bg-green-500 hover:-translate-y-1 hover:shadow-md">Return to Home</a>
+        </div>
+    </div>
+    
+    <script>
+        // Add more clouds dynamically
+        document.addEventListener('DOMContentLoaded', function() {
+            const cloudsContainer = document.querySelector('div.absolute');
+            for (let i = 0; i < 5; i++) {
+                const cloud = document.createElement('div');
+                cloud.classList.add('cloud');
+                cloud.style.width = Math.random() * 100 + 50 + 'px';
+                cloud.style.height = Math.random() * 20 + 20 + 'px';
+                cloud.style.top = Math.random() * 40 + '%';
+                cloud.style.left = Math.random() * 100 + '%';
+                cloud.style.animationDuration = Math.random() * 20 + 20 + 's';
+                cloud.style.opacity = Math.random() * 0.4 + 0.4;
+                cloudsContainer.appendChild(cloud);
+            }
+        });
+    </script>
+</body>
+</html>

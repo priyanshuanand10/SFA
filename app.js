@@ -63,6 +63,8 @@ app.get("/about", (req, res) => res.render("about"));
 app.get("/why-ai", (req, res) => res.render("why-ai"));
 // Contact page
 app.get("/contact", (req, res) => res.render("contact"));
+//Page not found Route
+app.get("*",(req,res)=>{res.render("pageNotFound")});
 
 // Export the configured Express application
 module.exports = app;
