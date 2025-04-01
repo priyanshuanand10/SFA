@@ -76,7 +76,7 @@ CROP_PRICE_API=your_crop_api_key
 
 ## 🏗️ Architecture
 
-![Architecture Diagram](docs/images/architecture.png)
+![Architecture Diagram](images/architecture.jpg)
 
 <!-- Add your architecture diagram here -->
 
@@ -117,7 +117,7 @@ CROP_PRICE_API=your_crop_api_key
 
 ## 📱 Mobile Responsiveness
 
-![Mobile View](docs/images/mobile_image.png)
+![Mobile View](images/mobile_image.png)
 
 <!-- Add your mobile view screenshot here -->
 
