@@ -7,8 +7,8 @@
 
 > A comprehensive farming assistance platform that helps farmers make data-driven decisions using AI and real-time data.
 
-![Smart Farming Assistant landing_page](docs/images/home_page.png)
-![Smart Farming Assistant Dashboard](docs/images/features.png)
+![Smart Farming Assistant landing_page](/images/home_page.png)
+![Smart Farming Assistant Dashboard](/images/features.png)
 
 <!-- Add your dashboard screenshot here -->
 
@@ -78,7 +78,7 @@ CROP_PRICE_API=your_crop_api_key
 
 ![Architecture Diagram](images/architecture.jpg)
 
-<!-- Add your architecture diagram here -->
+
 
 ## 🔌 API Endpoints
 
@@ -115,19 +115,8 @@ CROP_PRICE_API=your_crop_api_key
 - Secure file uploads
 - Environment variable protection
 
-## 📱 Mobile Responsiveness
 
-![Mobile View](images/mobile_image.png)
 
-<!-- Add your mobile view screenshot here -->
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'gitAdd some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
 
 ## 📄 License
 
