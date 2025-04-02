@@ -72,6 +72,8 @@ GOOGLE_CLIENT_ID=your_google_client_id
 GOOGLE_CLIENT_SECRET=your_google_client_secret
 WEATHER_API_KEY=your_weather_api_key
 CROP_PRICE_API=your_crop_api_key
+CNN_Model_API = [Disease_Detection_api](https://github.com/RepoRange/DISEASE_DETECTON_API)
+
 ```
 
 ## 🏗️ Architecture
