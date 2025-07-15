@@ -90,12 +90,12 @@ CNN_Model_API = [Disease_Detection_api](https://github.com/RepoRange/DISEASE_DET
 
 ### Weather
 
-- `GET /api/weather` - Get weather data
+- `GET /api/weather` - Get weather form
 - `GET /api/get-weather` - Get detailed forecast
 
 ### Crop Management
 
-- `GET /api/crop-calendar` - View crop calendar
+- `GET /api/crop-calendar` - Get crop calendar form 
 - `POST /api/generate-calendar` - Generate planting schedule
 
 ### Disease Detection
