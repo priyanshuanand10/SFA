@@ -29,9 +29,7 @@
   - Historical price analysis
   - Market trends
 
-## 🚀 Disease Prediction
 
-[Disease_Detection_api](https://github.com/RepoRange/DISEASE_DETECTON_API)
 
 ## 🛠️ Installation
 
